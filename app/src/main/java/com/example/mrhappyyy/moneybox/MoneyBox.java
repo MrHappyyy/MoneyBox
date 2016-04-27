@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 public class MoneyBox extends AppCompatActivity {
     private static TasksFragmentsView tasksFragmentsView;
@@ -31,6 +32,7 @@ public class MoneyBox extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_money_box);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -134,7 +136,7 @@ public class MoneyBox extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Задачи";
+                    return "Цели";
                 case 1:
                     return "Статистика";
                 case 2:
