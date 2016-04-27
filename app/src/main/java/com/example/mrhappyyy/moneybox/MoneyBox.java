@@ -1,5 +1,6 @@
 package com.example.mrhappyyy.moneybox;
 
+import android.content.pm.ActivityInfo;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -27,17 +29,15 @@ public class MoneyBox extends AppCompatActivity {
     private static SettingsFragmentsView settingsFragmentsView;
     private static DatabaseHelper databaseHandler;
 
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
 
     private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_money_box);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -47,7 +47,6 @@ public class MoneyBox extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,12 +91,12 @@ public class MoneyBox extends AppCompatActivity {
             /*TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));*/
 
-            System.out.println(getArguments().getInt(ARG_SECTION_NUMBER));
+            //System.out.println(getArguments().getInt(ARG_SECTION_NUMBER));
             switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
                 case 1:
                     if (tasksFragmentsView == null) {
                         rootView = inflater.inflate(R.layout.tasks_money_box, container, false);
-                        tasksFragmentsView = new TasksFragmentsView(rootView);
+                        tasksFragmentsView = new TasksFragmentsView(rootView, getContext());
                     } else {
                         rootView = tasksFragmentsView.getView();
                     }
@@ -105,7 +104,7 @@ public class MoneyBox extends AppCompatActivity {
                 case 2:
                     if (statisticsFragmentsView == null) {
                         rootView = inflater.inflate(R.layout.statistics_money_box, container, false);
-                        statisticsFragmentsView = new StatisticsFragmentsView(rootView);
+                        statisticsFragmentsView = new StatisticsFragmentsView(rootView, getContext());
                     } else {
                         rootView = statisticsFragmentsView.getView();
                     }
@@ -113,7 +112,7 @@ public class MoneyBox extends AppCompatActivity {
                 case 3:
                     if (settingsFragmentsView == null) {
                         rootView = inflater.inflate(R.layout.settings_money_box, container, false);
-                        settingsFragmentsView = new SettingsFragmentsView(rootView);
+                        settingsFragmentsView = new SettingsFragmentsView(rootView, getContext());
                     } else {
                         rootView = settingsFragmentsView.getView();
                     }
@@ -155,4 +154,6 @@ public class MoneyBox extends AppCompatActivity {
             return null;
         }
     }
+
+
 }
