@@ -1,4 +1,4 @@
-package com.example.mrhappyyy.moneybox;
+package com.example.mrhappyyy.moneybox.fragments;
 
 import android.view.View;
 

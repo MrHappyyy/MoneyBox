@@ -1,9 +1,6 @@
 package com.example.mrhappyyy.moneybox;
 
-import android.content.Context;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
@@ -17,12 +14,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.TextView;
+
+import com.example.mrhappyyy.moneybox.database.DatabaseHelper;
+import com.example.mrhappyyy.moneybox.fragments.SettingsFragmentsView;
+import com.example.mrhappyyy.moneybox.fragments.StatisticsFragmentsView;
+import com.example.mrhappyyy.moneybox.fragments.TasksFragmentsView;
 
 public class MoneyBox extends AppCompatActivity {
     private static TasksFragmentsView tasksFragmentsView;
     private static StatisticsFragmentsView statisticsFragmentsView;
     private static SettingsFragmentsView settingsFragmentsView;
-    private static DatabaseHandler databaseHandler;
+    private static DatabaseHelper databaseHandler;
+
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -82,34 +86,40 @@ public class MoneyBox extends AppCompatActivity {
             View rootView = null;
 
             if (databaseHandler == null) {
-                databaseHandler = new DatabaseHandler(getContext());
+                databaseHandler = new DatabaseHelper(getContext());
             }
 
             /*TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));*/
 
+            System.out.println(getArguments().getInt(ARG_SECTION_NUMBER));
             switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
                 case 1:
                     if (tasksFragmentsView == null) {
                         rootView = inflater.inflate(R.layout.tasks_money_box, container, false);
                         tasksFragmentsView = new TasksFragmentsView(rootView);
+                    } else {
+                        rootView = tasksFragmentsView.getView();
                     }
-                    rootView = tasksFragmentsView.getView();
                     break;
                 case 2:
                     if (statisticsFragmentsView == null) {
                         rootView = inflater.inflate(R.layout.statistics_money_box, container, false);
                         statisticsFragmentsView = new StatisticsFragmentsView(rootView);
+                    } else {
+                        rootView = statisticsFragmentsView.getView();
                     }
-                    rootView = statisticsFragmentsView.getView();
                     break;
                 case 3:
                     if (settingsFragmentsView == null) {
                         rootView = inflater.inflate(R.layout.settings_money_box, container, false);
                         settingsFragmentsView = new SettingsFragmentsView(rootView);
+                    } else {
+                        rootView = settingsFragmentsView.getView();
                     }
-                    rootView = settingsFragmentsView.getView();
                     break;
+                default:
+                    rootView = inflater.inflate(R.layout.activity_money_box, container, false);
             }
 
             return rootView;
