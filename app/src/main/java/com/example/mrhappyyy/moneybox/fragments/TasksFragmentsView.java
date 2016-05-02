@@ -24,8 +24,6 @@ public class TasksFragmentsView extends FragmentsView {
     public TasksFragmentsView(View rootView, Context context, DatabaseHelper databaseHandler){
         super(rootView, POSITION, context, databaseHandler);
         listView = (ListView) rootView.findViewById(R.id.listView);
-        databaseHandler.addTask(new TaskEntity(3, "sadhaujlsfldassf", 203.0, "fdszsdafxc", "fdsf"));
-        //databaseHandler.delete(3);
         refresh();
     }
 
@@ -35,8 +33,7 @@ public class TasksFragmentsView extends FragmentsView {
         String[] tasks = new String[listTasks.size()];
 
         for (int i = 0; i < listTasks.size(); i++) {
-            TaskEntity entity = listTasks.get(i);
-            tasks[i] = " " + entity.getId() + ". " + entity.getName() + " - " + entity.getPrice() + " грн.";
+            tasks[i] = " " + listTasks.get(i).getId() + ". " + listTasks.get(i).getName() + " - " + listTasks.get(i).getPrice() + " грн.";
         }
         prevTasks = tasks;
         listView.setAdapter(getAdapter(tasks));

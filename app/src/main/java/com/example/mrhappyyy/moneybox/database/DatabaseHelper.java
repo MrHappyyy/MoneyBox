@@ -5,7 +5,6 @@ import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 
@@ -49,10 +48,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void addTask(TaskEntity task) {
         tTask.add(task);
-        updateId();
+        sortId();
     }
 
-    private void updateId() {
+    private void sortId() {
         ArrayList<TaskEntity> tasks = getAllTask();
 
         for (int i = 0; i < tasks.size(); i++) {
@@ -74,17 +73,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void delete(int id) {
-        ArrayList<TaskEntity> tasks = getAllTask();
+        tTask.delete(id);
+        sortId();
+    }
 
-        if (tasks.size() - 1 == id) {
-            tTask.delete(id);
-        } else {
-            for (int i = id + 1; i < tasks.size(); i++) {
-                TaskEntity task = tasks.get(i);
-                task.setId(i - 1);
-                tTask.update(i - 1, task);
-            }
-            tTask.delete(tasks.size() - 1);
-        }
+    public TaskEntity getById(int id) {
+        return tTask.getById(id);
     }
 }

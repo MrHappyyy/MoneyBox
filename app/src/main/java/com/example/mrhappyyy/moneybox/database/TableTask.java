@@ -72,4 +72,24 @@ public class TableTask {
 
         db.update(TABLE_NAME, values, ID_COLUMN + "=?", new String[]{Integer.toString(id)});
     }
+
+    protected TaskEntity getById(int id) {
+        TaskEntity entity = null;
+        Cursor cursor = db.query(TABLE_NAME, new String[]{ID_COLUMN, NAME_COLUMN, PRICE_COLUMN, DATA_ADD_COLUMN, DATA_END_COLUMN},
+                null, null, null, null, null);
+
+        while (cursor.moveToNext()) {
+            if (cursor.getInt(cursor.getColumnIndex(ID_COLUMN)) == id) {
+                entity = new TaskEntity(
+                        cursor.getInt(cursor.getColumnIndex(ID_COLUMN)),
+                        cursor.getString(cursor.getColumnIndex(NAME_COLUMN)),
+                        cursor.getDouble(cursor.getColumnIndex(PRICE_COLUMN)),
+                        cursor.getString(cursor.getColumnIndex(DATA_ADD_COLUMN)),
+                        cursor.getString(cursor.getColumnIndex(DATA_END_COLUMN))
+                );
+            }
+        }
+        cursor.close();
+        return  entity;
+    }
 }
