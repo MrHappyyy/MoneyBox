@@ -16,12 +16,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.mrhappyyy.moneybox.database.DatabaseHelper;
 import com.example.mrhappyyy.moneybox.fragments.SettingsFragmentsView;
 import com.example.mrhappyyy.moneybox.fragments.StatisticsFragmentsView;
 import com.example.mrhappyyy.moneybox.fragments.TasksFragmentsView;
+
+import java.util.List;
 
 public class MoneyBox extends AppCompatActivity {
     private static TasksFragmentsView tasksFragmentsView;
@@ -65,6 +69,8 @@ public class MoneyBox extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    
+
     public static class PlaceholderFragment extends Fragment {
         private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -96,7 +102,7 @@ public class MoneyBox extends AppCompatActivity {
                 case 1:
                     if (tasksFragmentsView == null) {
                         rootView = inflater.inflate(R.layout.tasks_money_box, container, false);
-                        tasksFragmentsView = new TasksFragmentsView(rootView, getContext());
+                        tasksFragmentsView = new TasksFragmentsView(rootView, getContext(), databaseHandler);
                     } else {
                         rootView = tasksFragmentsView.getView();
                     }
@@ -120,6 +126,7 @@ public class MoneyBox extends AppCompatActivity {
                 default:
                     rootView = inflater.inflate(R.layout.activity_money_box, container, false);
             }
+            //rootView = inflater.inflate(R.layout.activity_money_box, container, false);
 
             return rootView;
         }
