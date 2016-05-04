@@ -25,16 +25,18 @@ public class TasksFragmentsView extends FragmentsView {
         super(rootView, POSITION, context, databaseHandler);
         listView = (ListView) rootView.findViewById(R.id.listView);
         refresh();
+        //databaseHandler.addTask(new TaskEntity(1, "s", 12.50, "12.07.2016", "12.07.2017"));
     }
 
     public void refresh() {
         ArrayList<TaskEntity> listTasks = databaseHelper.getAllTask();
 
         String[] tasks = new String[listTasks.size()];
-
+        System.out.println(listTasks.size());
         for (int i = 0; i < listTasks.size(); i++) {
             tasks[i] = " " + listTasks.get(i).getId() + ". " + listTasks.get(i).getName() + " - " + listTasks.get(i).getPrice() + " грн.";
         }
+
         prevTasks = tasks;
         listView.setAdapter(getAdapter(tasks));
     }
