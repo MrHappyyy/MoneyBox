@@ -69,7 +69,6 @@ public class MoneyBox extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    
 
     public static class PlaceholderFragment extends Fragment {
         private static final String ARG_SECTION_NUMBER = "section_number";
@@ -110,7 +109,7 @@ public class MoneyBox extends AppCompatActivity {
                 case 2:
                     if (statisticsFragmentsView == null) {
                         rootView = inflater.inflate(R.layout.statistics_money_box, container, false);
-                        statisticsFragmentsView = new StatisticsFragmentsView(rootView, getContext());
+                        statisticsFragmentsView = new StatisticsFragmentsView(rootView, getContext(), databaseHandler);
                     } else {
                         rootView = statisticsFragmentsView.getView();
                     }

@@ -1,6 +1,7 @@
 package com.example.mrhappyyy.moneybox.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -23,25 +24,25 @@ public class TasksFragmentsView extends FragmentsView {
 
     public TasksFragmentsView(View rootView, Context context, DatabaseHelper databaseHandler){
         super(rootView, POSITION, context, databaseHandler);
+        createView();
+        //databaseHandler.addTask(new TaskEntity(1, "s", 12.50, "12.07.2016", "12.07.2017"));
+    }
+
+    private void createView() {
         listView = (ListView) rootView.findViewById(R.id.listView);
         refresh();
-        //databaseHandler.addTask(new TaskEntity(1, "s", 12.50, "12.07.2016", "12.07.2017"));
     }
 
     public void refresh() {
         ArrayList<TaskEntity> listTasks = databaseHelper.getAllTask();
 
         String[] tasks = new String[listTasks.size()];
-        System.out.println(listTasks.size());
+
         for (int i = 0; i < listTasks.size(); i++) {
             tasks[i] = " " + listTasks.get(i).getId() + ". " + listTasks.get(i).getName() + " - " + listTasks.get(i).getPrice() + " грн.";
         }
 
         prevTasks = tasks;
         listView.setAdapter(getAdapter(tasks));
-    }
-
-    private ArrayAdapter<String> getAdapter(String[] tasks) {
-        return new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, tasks);
     }
 }

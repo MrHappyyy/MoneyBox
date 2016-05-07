@@ -2,6 +2,7 @@ package com.example.mrhappyyy.moneybox.fragments;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ArrayAdapter;
 
 import com.example.mrhappyyy.moneybox.database.DatabaseHelper;
 
@@ -30,5 +31,9 @@ public class FragmentsView {
 
     public View getView() {
         return this.rootView;
+    }
+
+    protected ArrayAdapter<String> getAdapter(String[] list) {
+        return new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, list);
     }
 }
