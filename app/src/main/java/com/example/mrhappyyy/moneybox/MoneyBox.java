@@ -47,7 +47,6 @@ public class MoneyBox extends AppCompatActivity {
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
     }
@@ -69,7 +68,6 @@ public class MoneyBox extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     public static class PlaceholderFragment extends Fragment {
         private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -87,6 +85,7 @@ public class MoneyBox extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+            System.out.println("invalidate");
             View rootView = null;
 
             if (databaseHandler == null) {

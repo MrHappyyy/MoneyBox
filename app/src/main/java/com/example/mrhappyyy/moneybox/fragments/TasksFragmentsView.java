@@ -1,18 +1,12 @@
 package com.example.mrhappyyy.moneybox.fragments;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.GridLayout;
+import android.widget.AdapterView;
 import android.widget.ListView;
-
 import com.example.mrhappyyy.moneybox.R;
 import com.example.mrhappyyy.moneybox.database.DatabaseHelper;
 import com.example.mrhappyyy.moneybox.database.TaskEntity;
-import com.example.mrhappyyy.moneybox.fragments.FragmentsView;
 
 import java.util.ArrayList;
 
@@ -21,20 +15,30 @@ public class TasksFragmentsView extends FragmentsView {
     private static final String TASK_ENTITY_NAME = "task.entity";
     private String[] prevTasks;
     private ListView listView;
+    private ArrayList<TaskEntity> listTasks;
 
-    public TasksFragmentsView(View rootView, Context context, DatabaseHelper databaseHandler){
-        super(rootView, POSITION, context, databaseHandler);
+    public TasksFragmentsView(View rootView, Context context, DatabaseHelper databaseHelper){
+        super(rootView, POSITION, context, databaseHelper);
+        //databaseHelper.addTask(new TaskEntity(1, "s", 12.50, "12.07.2016", "12.07.2017"));
         createView();
-        //databaseHandler.addTask(new TaskEntity(1, "s", 12.50, "12.07.2016", "12.07.2017"));
+
     }
 
     private void createView() {
         listView = (ListView) rootView.findViewById(R.id.listView);
-        refresh();
+        refreshListView();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
     }
 
-    public void refresh() {
-        ArrayList<TaskEntity> listTasks = databaseHelper.getAllTask();
+    public void refreshListView() {
+        listTasks = databaseHelper.getAllTask();
 
         String[] tasks = new String[listTasks.size()];
 

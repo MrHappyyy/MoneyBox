@@ -14,6 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private TableMoneyBox tMoneyBox;
     private TableTask tTask;
     private TableStatistic tStatistic;
+    private ArrayList<TaskEntity> tasks;
 
     public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory,
                           int version) {
@@ -55,15 +56,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void addTask(TaskEntity task) {
         tTask.add(task);
-        sortId();
+        tasks.add(task);
+        sortId(tasks.size() - 1);
     }
 
-    private void sortId() {
-        ArrayList<TaskEntity> tasks = getAllTask();
+    private void sortId(int id) {
+        int prevId;
 
-        for (int i = 0; i < tasks.size(); i++) {
+        for (int i = id; i < tasks.size(); i++) {
             if (tasks.get(i).getId() != i + 1) {
-                int prevId = tasks.get(i).getId();
+                prevId = tasks.get(i).getId();
                 tasks.get(i).setId(i + 1);
                 tTask.update(prevId, tasks.get(i));
             }
@@ -71,17 +73,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<TaskEntity> getAllTask() {
-        return tTask.getAll();
+        if (tasks == null) {
+            tasks = tTask.getAll();
+        }
+        return tasks;
     }
 
     public void updateTask(int id, TaskEntity entity) {
         entity.setId(id);
+        tasks.get(id).setId(entity.getId());
+        tasks.get(id).setName(entity.getName());
+        tasks.get(id).setDataAdd(entity.getDataAdd());
+        tasks.get(id).setDataEnd(entity.getDataEnd());
         tTask.update(id, entity);
     }
 
     public void deleteTask(int id) {
         tTask.delete(id);
-        sortId();
+        tasks.remove(id -1);
+        sortId(id - 1);
     }
 
     public TaskEntity getByIdTask(int id) {
